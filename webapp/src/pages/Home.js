@@ -1,8 +1,10 @@
+import Todo from '../components/todo/Todo';
+
 export default function Home() {
+    console.log('home');
     (
         <>
-            <h1>Home</h1>
-            <p>lorem ipsum</p>
+            <Todo />
         </>
     )
 }

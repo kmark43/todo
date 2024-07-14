@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  api:
+    build: ./api
+    restart: always
+    ports:
+      - 8080:8080
+  db:
+    image: postgres
+    restart: always
+    envfile:
+      - db.env
+    volumes:
+      - ./dbdata:/var/lib/postgresql/data
+    ports:
+      - 5432:5432

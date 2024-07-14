@@ -1,0 +1,13 @@
+.header ul {
+    padding: 8px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 8px;
+}
+
+.header ul a {
+    text-decoration: none;
+    color: #000;
+}

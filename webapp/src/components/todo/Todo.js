@@ -1,6 +1,17 @@
-import { useState } from 'react';
+import './Todo.css';
+import React, { useState } from 'react';
 
-export default function Todo() {
+export class Todo extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            elements: [],
+            formValues: {}
+        };
+        this.addElement = this.addElement.bind(this);
+        this.removeElement = this.removeElement.bind(this);
+    }
     const [elements, setElements] = useState([]);
     const [formValues, setFormValues] = useState({});
     // text box, add button
@@ -23,35 +34,27 @@ export default function Todo() {
         )
     }
 
-    function handleTextChange(event) {
-        const { name, value } = event.target;
-        setFormValues({
-            ...formValues,
-            [name]: value
-        });
-    }
-
     function addElement(event) {
         event.preventDefault();
-        return {
-            id: elementId++,
-            description: formValues['todo-add-input']
-        }
+        const formData = new FormData(event.target);
+        elements.push(createElement(elementId++, formData.get('todoAddInput')));
     }
 
-    const todoItems = elements.map((element) => {
-        return createElement(element.id, element.description);
-    });
+    function render() {
+        const todoItems = elements.map((element) => {
+            return createElement(element.id, element.description);
+        });
 
-    return (
-        <>
-            <form class="todo-header" onSubmit={addElement}>
-                <input id="todo-add-input" name="todo-add-input" type="text" onChange={handleTextChange} />
-                <button class="todo-add" onClick={addElement}>Add</button>
-            </form>
-            <li class="todo">
-                {todoItems}
-            </li>
-        </>
-    )
+        return (
+            <>
+                <form className="todoAddForm" onSubmit={addElement}>
+                    <input id="todoAddInput" name="todoAddInput" type="text" />
+                    <button className="todoAddBtn" type="submit">Add</button>
+                </form>
+                <li className="todo">
+                    {todoItems}
+                </li>
+            </>
+        )
+    }
 }

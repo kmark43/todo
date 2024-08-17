@@ -1,0 +1,17 @@
+.todo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+
+li.todo {
+    list-style: none;
+    width: 50%;
+}
+
+li.todo:hover {
+    background-color: #444;
+}

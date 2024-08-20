@@ -2,6 +2,8 @@ import express, { Request, Response } from 'express';
 
 const app = express();
 const port = process.env.PORT || 8080;
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
 
 type TodoItem = {
     id: string;
@@ -11,15 +13,17 @@ type TodoItem = {
 let todoItems: TodoItem[] = [];
 
 app.post('/todoAdd', (req: Request, res: Response) => {
+    console.log(req.params);
+    console.log(req.body);
   todoItems.push({
-    id: req.params['id'],
-    value: req.params['value']
+    id: req.body['id'],
+    value: req.body['value']
   });
   res.sendStatus(200);
 });
 
 app.post('/todoRemove', (req: Request, res: Response) => {
-  todoItems = todoItems.filter((val) => val.id !== req.params['id']);
+  todoItems = todoItems.filter((val) => val.id !== req.body['id']);
   res.sendStatus(200);
 });
 

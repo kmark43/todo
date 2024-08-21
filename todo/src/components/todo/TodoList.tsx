@@ -4,7 +4,7 @@ import { randomUUID } from "crypto";
 
 type TodoEntry = {
     id: string;
-    value: string;
+    title: string;
 }
 
 type TodoListProps = {
@@ -24,7 +24,7 @@ export const TodoList = (props: TodoListProps) => {
         if (addElementVal && addElementVal.length > 0) {
             setTodoList([...todoList, {
                 id: crypto.randomUUID(),
-                value: addElementVal,
+                title: addElementVal,
             }]);
             setAddElementVal('');
         }
@@ -44,7 +44,7 @@ export const TodoList = (props: TodoListProps) => {
             {todoList.map((element) => { 
                 return <li key={element.id}>
                     <input type="checkbox" id={element.id} onChange={onElementRemove} />
-                    <label htmlFor={element.id}>{element.value}</label>
+                    <label htmlFor={element.id}>{element.title}</label>
                 </li>
             })}
         </ul>

@@ -1,10 +1,17 @@
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
+import { nextTick } from 'process';
 const { PrismaClient } = require('@prisma/client');
 
 const app = express();
 const port = process.env.PORT || 8080;
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
+app.use((req: Request, res: Response, next: NextFunction) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Headers', 'content-type');
+  res.setHeader('Access-Control-Allow-Methods', 'POST');
+  next();
+});
 
 const prisma = new PrismaClient();
 
@@ -14,6 +21,7 @@ type TodoItem = {
 }
 
 app.post('/todoAdd', async (req: Request, res: Response) => {
+  console.log('add request');
   try {
     const item = await prisma.TodoItem.create({
       data: {
@@ -47,6 +55,7 @@ app.post('/todoRemove', async (req: Request, res: Response) => {
 });
 
 app.post('/todoList', async (req: Request, res: Response) => {
+  console.log('list request');
   try {
     res.status(200).json(await prisma.TodoItem.findMany({}));
   } catch (error) {
